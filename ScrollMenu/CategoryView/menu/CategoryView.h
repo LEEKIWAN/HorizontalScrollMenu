@@ -33,26 +33,22 @@ typedef NS_ENUM(NSUInteger, MainCategoryPagerScrollDirection) {
     CustomCategoryItem *currentTabView;
     BOOL isViewTabData;
 }
+@property (nonatomic, assign) id <CategoryViewDelegate> delegate;
 
 @property (retain, nonatomic) IBOutlet UIView *view;
-@property (retain, nonatomic) NSMutableArray<NSString *> *data;
-@property (nonatomic, assign) id <CategoryViewDelegate> delegate;
 @property (retain, nonatomic) IBOutlet UIView *contentView;
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *selectBarWidthConstraint;
 @property (retain, nonatomic) IBOutlet NSLayoutConstraint *selectBarLeftConstraint;
 @property (retain, nonatomic) IBOutlet UIView *selectBarView;
-@property (retain, nonatomic) UIScrollView *pagerScollView;
+@property (retain, nonatomic) NSMutableArray<NSString *> *data;
+
 @property (assign, nonatomic) BOOL isFitTextWidth;
 @property (assign, nonatomic) NSInteger maxShowCount;
 @property (assign, nonatomic) NSInteger selectIndex;
-
 @property (assign, nonatomic) CGFloat tabAnimationDuration;
 
-- (void)updatePagerScrollView;
-- (void)readyScrollAnimation;
-- (void)startScrollAnimation;
 - (NSString *)getCurrentData;
 
 @end

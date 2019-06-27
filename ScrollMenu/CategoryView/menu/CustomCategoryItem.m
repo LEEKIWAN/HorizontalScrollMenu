@@ -39,12 +39,10 @@
 - (void)setNib {
     _view = [[[NSBundle mainBundle] loadNibNamed:@"CustomCategoryItem" owner:self options:nil] objectAtIndex:0];
     [_view setFrame:CGRectMake(0, 0, [self frame].size.width, [self frame].size.height)];
-    [_view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [self addSubview:_view];
-    self.translatesAutoresizingMaskIntoConstraints = NO;
-    [self setConstraint:_view];
     
-    _viewWidthConstraint = [self findViewWidthConstraint];
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+
     if(_viewWidthConstraint == nil) {
         self.viewWidthConstraint =  [NSLayoutConstraint constraintWithItem:self
                                                              attribute:NSLayoutAttributeWidth
@@ -53,7 +51,6 @@
                                                              attribute:NSLayoutAttributeWidth
                                                             multiplier:1
                                                               constant:100];
-        _viewWidthConstraint.identifier = @"mainCategoryWidthConstraint";
         [self addConstraint:_viewWidthConstraint];
     }
 }
@@ -100,10 +97,6 @@
     } else {
         [_titleLabel setFont:_selectFont];
     }
-}
-
-- (NSLayoutConstraint *) findViewWidthConstraint {
-    return [self findViewConstraint:self identifier:@"mainCategoryWidthConstraint"];
 }
 
 @end
