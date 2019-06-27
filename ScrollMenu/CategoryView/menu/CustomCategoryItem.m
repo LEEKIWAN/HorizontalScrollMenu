@@ -42,17 +42,6 @@
     [self addSubview:_view];
     
     self.translatesAutoresizingMaskIntoConstraints = NO;
-
-    if(_viewWidthConstraint == nil) {
-        self.viewWidthConstraint =  [NSLayoutConstraint constraintWithItem:self
-                                                             attribute:NSLayoutAttributeWidth
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil
-                                                             attribute:NSLayoutAttributeWidth
-                                                            multiplier:1
-                                                              constant:100];
-        [self addConstraint:_viewWidthConstraint];
-    }
 }
 
 - (void)setUI {

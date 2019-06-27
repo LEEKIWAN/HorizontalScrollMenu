@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (retain, nonatomic) IBOutlet UIView *view;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
-@property (retain, nonatomic) NSLayoutConstraint *viewWidthConstraint;
+//@property (retain, nonatomic) NSLayoutConstraint *viewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidthConstraint;
 
 @property (retain, nonatomic) UIFont *normalFont;
 @property (retain, nonatomic) UIColor *normalColor;

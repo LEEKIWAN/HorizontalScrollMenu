@@ -25,7 +25,6 @@ typedef NS_ENUM(NSUInteger, MainCategoryPagerScrollDirection) {
 @interface CategoryView: UIView <TabControllerDelegate> {
     TabController *tabController;
     CGFloat beforeOffsetX;
-    BOOL isAnimation;
     CGFloat currentOffsetX;
     NSInteger currentIndex;
     CGFloat currentScrollPercent;

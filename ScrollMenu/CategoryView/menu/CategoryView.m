@@ -54,32 +54,6 @@
     baseGatherButtonWidth = 42;
 }
 
-- (void)setSelectIndex:(NSInteger)index {
-    if (!isViewTabData && [_data count] < 1) {
-        return;
-    }
-    
-    isAnimation = YES;
-    _selectIndex = index;
-    [self doDelegate];
-    
-    CustomCategoryItem *tabView = (CustomCategoryItem *)[tabController getButtonView:_selectIndex];
-    [tabController selectTabIndex:_selectIndex];
-
-    [self moveCenterScrollView:_selectIndex];
-    
-    [UIView animateWithDuration:_tabAnimationDuration
-                          delay:0.0
-                        options: UIViewAnimationOptionCurveEaseOut
-                     animations:^(void) {
-                         [self.selectBarLeftConstraint setConstant:tabView.frame.origin.x];
-                         [self.selectBarWidthConstraint setConstant:[tabView.viewWidthConstraint constant]];
-                         [self layoutIfNeeded];
-                     }
-                     completion:^(BOOL finished) {
-                         self->isAnimation = NO;
-                     }];
-}
 
 - (void)setData:(NSMutableArray<NSString *> *)data {
     _data = data;
@@ -87,19 +61,8 @@
     [self updateUI];
 }
 
-- (NSString *)getCurrentData {
-    if (!isViewTabData && [_data count] > 0) {
-        return [_data objectAtIndex:_selectIndex];
-    }
-    return nil;
-}
 
 - (void)updateUI {
-    [self updateDataUI];
-    [self layoutIfNeeded];
-}
-
-- (void)updateDataUI {
     NSMutableArray *tabs = [[NSMutableArray alloc] init];
     CustomCategoryItem *beforeTabView = nil;
     CGFloat contentViewWidth = 0;
@@ -151,26 +114,42 @@
     }
     [tabController setTabs:YES tabs:tabs];
     [_contentViewWidthConstraint setConstant:contentViewWidth];
-    [self checkScrollViewWidth:_data.count];
+    
+    [self layoutIfNeeded];
 }
 
-- (void)checkScrollViewWidth:(NSInteger)dataCount {
-    if (dataCount < 1) {
+
+- (NSString *)getCurrentData {
+    if (!isViewTabData && [_data count] > 0) {
+        return [_data objectAtIndex:_selectIndex];
+    }
+    return nil;
+}
+
+
+- (void)setSelectIndex:(NSInteger)index {
+    if (!isViewTabData && [_data count] < 1) {
         return;
     }
     
-    if (_isFitTextWidth) {
-        if ([_contentViewWidthConstraint constant] > _view.bounds.size.width - baseGatherButtonWidth) {
-        } else {
-            [_view layoutIfNeeded];
-            CGFloat buttonWidth = _scrollView.frame.size.width;
-            buttonWidth = _scrollView.frame.size.width / dataCount;
-            for (CustomCategoryItem *tabView in [tabController buttonViews]) {
-                [tabView.viewWidthConstraint setConstant:buttonWidth];
-            }
-            [_contentViewWidthConstraint setConstant:_scrollView.frame.size.width];
-        }
-    }
+    _selectIndex = index;
+    [self doDelegate];
+    
+    CustomCategoryItem *tabView = (CustomCategoryItem *)[tabController getButtonView:_selectIndex];
+    [tabController selectTabIndex:_selectIndex];
+    
+    [self moveCenterScrollView:_selectIndex];
+    
+    [UIView animateWithDuration:_tabAnimationDuration
+                          delay:0.0
+                        options: UIViewAnimationOptionCurveEaseOut
+                     animations:^(void) {
+                         [self.selectBarLeftConstraint setConstant:tabView.frame.origin.x];
+                         [self.selectBarWidthConstraint setConstant:[tabView.viewWidthConstraint constant]];
+                         [self layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                     }];
 }
 
 - (void)setFitTextWidth:(CustomCategoryItem *)tabView {
